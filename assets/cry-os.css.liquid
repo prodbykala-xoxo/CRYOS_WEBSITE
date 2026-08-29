@@ -109,6 +109,19 @@ button { font-family: inherit; }
   background: radial-gradient(120% 90% at 50% 45%, transparent 40%, rgba(0,0,0,.55) 100%);
 }
 
+/* Sigil watermark — the alt logo, massive and almost invisible, fixed to
+   the viewport like a mark burned into the OS substrate rather than page
+   decoration. Sits above the void but well below content/panels, so it
+   only reads in the negative space around them. */
+.cry-sigil {
+  position: fixed; inset: 0; z-index: 2; pointer-events: none;
+  background-image: url("{{ 'logo-square-white.png' | asset_url }}");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 150vmax;
+  opacity: .02;
+}
+
 .dot {
   width: 7px; height: 7px; border-radius: 50%; background: var(--live);
   box-shadow: 0 0 8px var(--live); display: inline-block;
