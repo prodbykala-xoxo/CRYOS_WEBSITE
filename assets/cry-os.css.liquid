@@ -112,13 +112,17 @@ button { font-family: inherit; }
 /* Sigil watermark — the alt logo, massive and almost invisible, fixed to
    the viewport like a mark burned into the OS substrate rather than page
    decoration. Sits above the void but well below content/panels, so it
-   only reads in the negative space around them. */
+   only reads in the negative space around them.
+   Sized off viewport HEIGHT (not vmax) so the whole square mark stays in
+   frame on wide/landscape screens — vmax locks both dimensions to the
+   wider axis, which on a landscape viewport left only a thin sliver of
+   the logo's vertical extent visible at once. */
 .cry-sigil {
   position: fixed; inset: 0; z-index: 2; pointer-events: none;
   background-image: url("{{ 'logo-square-white.png' | asset_url }}");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 150vmax;
+  background-size: auto 120vh;
   opacity: .02;
 }
 
