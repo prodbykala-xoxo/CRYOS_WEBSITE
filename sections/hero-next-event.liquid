@@ -10,13 +10,12 @@
       {{ section.settings.background_image | image_url: width: 2400 | image_tag: loading: 'eager', fetchpriority: 'high' }}
     {% elsif section.settings.enable_rotation %}
       {% comment %}
-        Cycling hero — 7 graded stills, pure-CSS (no JS, respects
-        prefers-reduced-motion by freezing on frame 1). Each photo holds,
-        glitch-jitters, and dissolves into a TV-static break before the next
-        one snaps into focus — see cry-os.css.liquid ".cry-hero__rotation"
-        and ".cry-hero__static". Order is a deliberate arc: mystery/world
-        (1-3) → human payoff (4) → live energy build (5-6) → intimate close
-        (7), looping back into the quiet opener.
+        Cycling hero — 7 graded stills, pure-CSS slow crossfade (no JS,
+        respects prefers-reduced-motion by freezing on frame 1). Each photo
+        fades in over 3s, holds for 4s, then dissolves directly into the
+        next one over 3s — see cry-os.css ".cry-hero__rotation". Order is a
+        deliberate arc: mystery/world (1-3) → human payoff (4) → live energy
+        build (5-6) → intimate close (7), looping back into the quiet opener.
       {% endcomment %}
       <div class="cry-hero__rotation">
         <img src="{{ 'hero-rotation-1.jpg' | asset_url }}" alt="" loading="eager" fetchpriority="high">
@@ -27,7 +26,6 @@
         <img src="{{ 'hero-rotation-6.jpg' | asset_url }}" alt="" loading="lazy">
         <img src="{{ 'hero-rotation-7.jpg' | asset_url }}" alt="" loading="lazy">
       </div>
-      <div class="cry-hero__static" aria-hidden="true"></div>
     {% else %}
       <img src="{{ 'hero-defiance.jpg' | asset_url }}" alt="" loading="eager" fetchpriority="high">
     {% endif %}

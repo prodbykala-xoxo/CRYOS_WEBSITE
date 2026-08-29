@@ -319,59 +319,35 @@ button { font-family: inherit; }
 .cry-hero__media img, .cry-hero__media video { width: 100%; height: 100%; object-fit: cover; filter: saturate(.85) contrast(1.05); }
 .cry-hero__media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8,9,11,.2) 0%, rgba(8,9,11,.92) 100%); }
 
-/* Cycling hero rotation — 7 stills that dissolve into a static/glitch
-   break between each, like a channel change on a broken CRT, rather than
-   a plain crossfade. One shared 63s timeline (7 images x 9s each): each
-   image holds, jitter-flashes, cuts to static, and the next snaps in out
-   of the noise. animation-delay staggers which image is "live". */
+/* Cycling hero rotation — 7 stills in a slow true crossfade: each photo
+   fades in over 3s, holds for 4s, then spends the next 3s dissolving
+   directly into the following photo (they overlap, both partially
+   visible, rather than cutting through black). One shared 49s timeline,
+   images spaced 7s apart (3s fade + 4s hold = 7s, so image N's fade-out
+   exactly overlaps image N+1's fade-in). */
 .cry-hero__rotation { position: absolute; inset: 0; }
 .cry-hero__rotation img {
   position: absolute; inset: 0;
   opacity: 0;
-  animation: cry-hero-cycle 63s infinite;
+  animation: cry-hero-cycle 49s infinite;
 }
 .cry-hero__rotation img:nth-child(1) { animation-delay: 0s; }
-.cry-hero__rotation img:nth-child(2) { animation-delay: 9s; }
-.cry-hero__rotation img:nth-child(3) { animation-delay: 18s; }
-.cry-hero__rotation img:nth-child(4) { animation-delay: 27s; }
-.cry-hero__rotation img:nth-child(5) { animation-delay: 36s; }
-.cry-hero__rotation img:nth-child(6) { animation-delay: 45s; }
-.cry-hero__rotation img:nth-child(7) { animation-delay: 54s; }
+.cry-hero__rotation img:nth-child(2) { animation-delay: 7s; }
+.cry-hero__rotation img:nth-child(3) { animation-delay: 14s; }
+.cry-hero__rotation img:nth-child(4) { animation-delay: 21s; }
+.cry-hero__rotation img:nth-child(5) { animation-delay: 28s; }
+.cry-hero__rotation img:nth-child(6) { animation-delay: 35s; }
+.cry-hero__rotation img:nth-child(7) { animation-delay: 42s; }
 @keyframes cry-hero-cycle {
-  0%     { opacity: 0; transform: translateX(0); filter: saturate(.85) contrast(1.05) brightness(1); }
-  0.4%   { opacity: .6; transform: translateX(10px); filter: saturate(.2) contrast(1.5) brightness(1.6); }
-  1.27%  { opacity: 1; transform: translateX(0); filter: saturate(.85) contrast(1.05) brightness(1); }
-  10.32% { opacity: 1; transform: translateX(0); filter: saturate(.85) contrast(1.05) brightness(1); }
-  10.9%  { opacity: .6; transform: translateX(-10px); filter: saturate(.2) contrast(1.5) brightness(1.6); }
-  11.59% { opacity: 0; transform: translateX(0); filter: saturate(.85) contrast(1.05) brightness(1); }
+  0%     { opacity: 0; }
+  6.12%  { opacity: 1; }  /* 3s fade-in complete */
+  14.29% { opacity: 1; }  /* 7s: hold ends, next image begins fading in here too */
+  20.41% { opacity: 0; }  /* 10s: fade-out complete */
   100%   { opacity: 0; }
 }
-
-/* Static/noise break — one shared overlay, same burst every 9s regardless
-   of which two photos it sits between. */
-.cry-hero__static {
-  position: absolute; inset: 0; z-index: 1;
-  background: url("{{ 'static-noise.jpg' | asset_url }}");
-  background-size: 200px 200px;
-  opacity: 0;
-  mix-blend-mode: screen;
-  animation: cry-static-burst 9s infinite, cry-static-roll 0.4s steps(2) infinite;
-}
-@keyframes cry-static-burst {
-  0%     { opacity: 1; }
-  8.89%  { opacity: 0; }
-  72.2%  { opacity: 0; }
-  81.1%  { opacity: 1; }
-  100%   { opacity: 1; }
-}
-@keyframes cry-static-roll {
-  0%   { background-position: 0 0; }
-  100% { background-position: 37px -53px; }
-}
 @media (prefers-reduced-motion: reduce) {
-  .cry-hero__rotation img { animation: none; opacity: 0; transform: none; filter: saturate(.85) contrast(1.05); }
+  .cry-hero__rotation img { animation: none; }
   .cry-hero__rotation img:first-child { opacity: 1; }
-  .cry-hero__static { display: none; }
 }
 .cry-hero__body { position: relative; z-index: 2; width: 100%; padding: 48px 24px; display: flex; flex-direction: column; gap: 24px; }
 .cry-hero__title { font-size: clamp(48px, 10vw, 88px); letter-spacing: .01em; }
