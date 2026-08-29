@@ -1,0 +1,35 @@
+{% comment %}
+  MEDIA / Transmissions — one large, video-forward entry at a time,
+  pulling from a blog named "transmissions" (one article per drop:
+  live clip, music video, BTS footage, photography set).
+{% endcomment %}
+<div class="cry-container" style="padding-block:48px;">
+  <div class="mtitle">TRANSMISSIONS <span class="jp-gloss">記録映像</span></div>
+
+  {% assign feed = blogs['transmissions'] %}
+  {% if feed %}
+    {% for article in feed.articles %}
+      <div class="mbox flat" style="margin-bottom:32px;">
+        <div class="mtitle">
+          TRANSMISSION_{{ forloop.index | prepend: '000' | slice: -3, 3 }}
+          <span class="meta">{{ article.published_at | date: '%Y.%m.%d' }}</span>
+        </div>
+        <div class="shot" style="aspect-ratio:16/9;margin-bottom:16px;">
+          {% if article.metafields.custom.video %}
+            {{ article.metafields.custom.video.value | video_tag: controls: true }}
+          {% elsif article.image %}
+            {{ article.image | image_url: width: 1600 | image_tag: loading: 'lazy' }}
+          {% endif %}
+        </div>
+        <div class="v" style="font-size:16px;margin-bottom:6px;">{{ article.title }}</div>
+        <div style="font-family:var(--ui);color:var(--ink-dim);font-size:14px;">{{ article.excerpt_or_content | strip_html | truncate: 220 }}</div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="status pending">TRANSMISSIONS_BLOG_NOT_FOUND // create a blog handled "transmissions" in the Shopify admin</p>
+  {% endif %}
+</div>
+
+{% schema %}
+{ "name": "Transmissions — List", "settings": [] }
+{% endschema %}

@@ -1,0 +1,88 @@
+<div class="cry-container" style="padding-block:48px;">
+  <div style="display:grid;grid-template-columns:1.1fr 1fr;gap:40px;" class="cry-product-layout">
+    <div>
+      <div class="shot" style="aspect-ratio:4/5;">
+        {% if product.selected_or_first_available_variant.featured_image %}
+          {{ product.selected_or_first_available_variant.featured_image | image_url: width: 1200 | image_tag: loading: 'eager', id: 'ProductMainImage' }}
+        {% elsif product.featured_image %}
+          {{ product.featured_image | image_url: width: 1200 | image_tag: loading: 'eager', id: 'ProductMainImage' }}
+        {% endif %}
+        <figcaption>PRODUCT_{{ product.id | modulo: 1000 | prepend: '000' | slice: -3, 3 }}</figcaption>
+      </div>
+
+      {% if product.images.size > 1 %}
+        <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;">
+          {% for image in product.images %}
+            <a href="{{ image | image_url: width: 1200 }}" class="shot" data-product-thumb style="width:72px;height:72px;flex:none;">
+              {{ image | image_url: width: 144 | image_tag: loading: 'lazy' }}
+            </a>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <div>
+      <div class="mtitle">
+        {% if product.available == false %}SOLD OUT{% elsif product.tags contains 'pre-order' %}PRE-ORDER{% else %}AVAILABLE{% endif %}
+        <span class="meta">PRODUCT_{{ product.id | modulo: 1000 | prepend: '000' | slice: -3, 3 }}</span>
+      </div>
+
+      <h1 style="font-size:32px;margin-bottom:8px;">{{ product.title }}</h1>
+      <div class="status ok" style="font-size:16px;margin-bottom:20px;">{{ product.price | money }}</div>
+
+      {% form 'product', product %}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+
+        {% for option in product.options_with_values %}
+          <div style="margin-bottom:16px;">
+            <div class="k" style="margin-bottom:8px;">{{ option.name | upcase }}</div>
+            <div class="size-pills" data-size-group>
+              {% for value in option.values %}
+                {% assign is_available = true %}
+                <button
+                  type="button"
+                  class="size-pill"
+                  data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+                  aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"
+                  {% unless is_available %}disabled{% endunless %}
+                >{{ value }}</button>
+              {% endfor %}
+            </div>
+          </div>
+        {% endfor %}
+
+        <div style="display:flex;gap:12px;align-items:center;margin-bottom:20px;">
+          <input type="number" name="quantity" value="1" min="1" style="width:64px;background:var(--sunk);border:1px solid var(--line-hot);color:var(--ink);font-family:var(--tel);padding:.7em;">
+          <button type="submit" class="btn solid" style="flex:1;" {% unless product.available %}disabled{% endunless %}>
+            {% if product.available %}ADD TO CART{% else %}SOLD OUT{% endif %}
+          </button>
+        </div>
+      {% endform %}
+
+      <div class="mbox flat" style="font-family:var(--ui);font-size:14px;color:var(--ink-dim);">
+        {{ product.description }}
+      </div>
+    </div>
+  </div>
+
+  {% if product.metafields.custom.related_products %}
+    <section class="cry-section">
+      <div class="cry-section__head"><h2 class="cry-section__title" style="font-size:22px;">RELATED</h2></div>
+      <div class="cry-grid cry-grid--4">
+        {% for related in product.metafields.custom.related_products.value limit: 4 %}
+          {% render 'product-card', product: related, index: forloop.index %}
+        {% endfor %}
+      </div>
+    </section>
+  {% endif %}
+</div>
+
+<style>
+  @media (max-width: 768px) {
+    .cry-product-layout { grid-template-columns: 1fr !important; }
+  }
+</style>
+
+{% schema %}
+{ "name": "Main product", "settings": [] }
+{% endschema %}

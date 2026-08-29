@@ -1,0 +1,32 @@
+{% comment %}
+  Full LIVE_ARCHIVE database — every article in the "live-archive" blog.
+  Merchant maintains this by adding/removing blog articles, no theme edits.
+{% endcomment %}
+<div class="cry-container" style="padding-block:48px;">
+  <div class="mtitle">LIVE_ARCHIVE <span class="jp-gloss">過去の公演</span><span class="meta">DATABASE</span></div>
+
+  {% assign archive_blog = blogs['live-archive'] %}
+  <div class="cry-grid cry-grid--3">
+    {% if archive_blog %}
+      {% for article in archive_blog.articles %}
+        <a href="{{ article.url }}" class="mbox flat" style="display:block;text-decoration:none;">
+          <div class="shot" style="aspect-ratio:4/5;margin-bottom:12px;">
+            {% if article.image %}{{ article.image | image_url: width: 600 | image_tag: loading: 'lazy' }}{% endif %}
+            <figcaption>EVENT_{{ forloop.index | prepend: '000' | slice: -3, 3 }}</figcaption>
+          </div>
+          <div class="v" style="font-size:14px;">{{ article.title }}</div>
+          <div class="k" style="margin-top:4px;">{{ article.published_at | date: '%m.%d.%Y' }}</div>
+          {% if article.tags.size > 0 %}
+            <div class="k" style="margin-top:4px;color:var(--ink-faint);">{{ article.tags | join: ' · ' }}</div>
+          {% endif %}
+        </a>
+      {% endfor %}
+    {% else %}
+      <p class="status pending">ARCHIVE_BLOG_NOT_FOUND // create a blog handled "live-archive" in the Shopify admin, one article per past show</p>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Live archive — Full", "settings": [] }
+{% endschema %}

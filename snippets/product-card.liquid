@@ -1,0 +1,29 @@
+{% comment %}
+  Renders a product card in the CRY OS commerce style.
+  Usage: {% render 'product-card', product: product, index: forloop.index %}
+{% endcomment %}
+
+<div class="product-card">
+  {% if product.available == false %}
+    <span class="product-card__tag sold-out">SOLD OUT</span>
+  {% elsif product.tags contains 'pre-order' %}
+    <span class="product-card__tag">PRE-ORDER</span>
+  {% endif %}
+
+  <a href="{{ product.url }}" class="shot product-card__media">
+    {% if product.featured_image %}
+      {{ product.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: product.featured_image.alt }}
+    {% endif %}
+    <figcaption>PRODUCT_{{ index | default: 1 | prepend: '00' | slice: -3, 3 }}</figcaption>
+  </a>
+
+  <div class="product-card__info">
+    <div class="product-card__name">{{ product.title | upcase }}</div>
+    <div class="product-card__price">
+      {{ product.price | money }}
+      {% if product.compare_at_price > product.price %}
+        <s style="color:var(--ink-faint);margin-left:.5em;">{{ product.compare_at_price | money }}</s>
+      {% endif %}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+{% comment %} Deliberately smaller/quieter than LIVE/SHOP/MEDIA — see design-system.md §4 {% endcomment %}
+<div class="cry-container" style="padding-block:48px;max-width:760px;">
+  <div class="mtitle">MUSIC <span class="jp-gloss">音楽</span></div>
+
+  {% if section.blocks.size > 0 %}
+    <div class="mbox" style="margin-bottom:32px;">
+      <div class="mtitle">LATEST RELEASE</div>
+      {% assign latest = section.blocks.first %}
+      <div style="display:flex;gap:20px;align-items:center;">
+        {% if latest.settings.cover_image %}
+          <div class="shot" style="width:120px;height:120px;flex:none;">
+            {{ latest.settings.cover_image | image_url: width: 240 | image_tag: loading: 'eager' }}
+          </div>
+        {% endif %}
+        <div>
+          <div class="v" style="font-family:var(--disp);font-size:22px;">{{ latest.settings.title }}</div>
+          <div class="k" style="margin-top:6px;">{{ latest.settings.release_type }} · {{ latest.settings.release_date }}</div>
+          {% if latest.settings.streaming_url != blank %}
+            <a href="{{ latest.settings.streaming_url }}" class="btn solid" style="margin-top:12px;">LISTEN NOW</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="mtitle" style="font-size:10px;">DISCOGRAPHY</div>
+  <div>
+    {% for block in section.blocks offset: 1 %}
+      <div class="row">
+        <span class="k" style="min-width:6em;">{{ block.settings.release_date }}</span>
+        <span class="v">{{ block.settings.title }} <span style="color:var(--ink-faint);">— {{ block.settings.release_type }}</span></span>
+        {% if block.settings.streaming_url != blank %}
+          <a href="{{ block.settings.streaming_url }}" class="k" style="margin-left:auto;color:var(--sig-hot);">LISTEN &rarr;</a>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Discography",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "release",
+      "name": "Release",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "text", "id": "release_type", "label": "Type", "info": "e.g. EP, Single, Album" },
+        { "type": "text", "id": "release_date", "label": "Release date" },
+        { "type": "image_picker", "id": "cover_image", "label": "Cover art" },
+        { "type": "url", "id": "streaming_url", "label": "Streaming link" }
+      ]
+    }
+  ],
+  "max_blocks": 30,
+  "presets": [{ "name": "Discography" }]
+}
+{% endschema %}

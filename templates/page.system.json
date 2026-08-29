@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "fragments": { "type": "system-fragments" }
+  },
+  "order": ["fragments"]
+}

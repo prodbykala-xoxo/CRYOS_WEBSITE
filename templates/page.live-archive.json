@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "archive": { "type": "live-archive-full" }
+  },
+  "order": ["archive"]
+}

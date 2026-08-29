@@ -1,0 +1,40 @@
+<footer class="cry-footer">
+  <div class="cry-container" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;">
+    <div>
+      <div class="cry-header__logo" style="font-size:16px;">{{ shop.name | default: 'KALA' }}</div>
+      <p style="margin-top:8px;max-width:32em;">{{ section.settings.tagline }}</p>
+    </div>
+
+    <nav aria-label="Footer" style="display:flex;flex-direction:column;gap:6px;">
+      <a href="{{ pages.live.url | default: '/pages/live' }}">Live</a>
+      <a href="{{ pages.music.url | default: '/pages/music' }}">Music</a>
+      <a href="{{ pages.media.url | default: '/pages/media' }}">Media</a>
+      <a href="{{ routes.all_products_collection_url }}">Shop</a>
+      <a href="{{ pages.system.url | default: '/pages/system' }}">System</a>
+    </nav>
+
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      {% if section.settings.instagram_url != blank %}<a href="{{ section.settings.instagram_url }}">Instagram</a>{% endif %}
+      {% if section.settings.tiktok_url != blank %}<a href="{{ section.settings.tiktok_url }}">TikTok</a>{% endif %}
+      {% if section.settings.x_url != blank %}<a href="{{ section.settings.x_url }}">X</a>{% endif %}
+      {% if section.settings.youtube_url != blank %}<a href="{{ section.settings.youtube_url }}">YouTube</a>{% endif %}
+    </div>
+  </div>
+
+  <div class="cry-container" style="margin-top:32px;opacity:.6;">
+    &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "text", "id": "tagline", "label": "Tagline", "default": "GAME × MUSIC." },
+    { "type": "url", "id": "instagram_url", "label": "Instagram URL" },
+    { "type": "url", "id": "tiktok_url", "label": "TikTok URL" },
+    { "type": "url", "id": "x_url", "label": "X URL" },
+    { "type": "url", "id": "youtube_url", "label": "YouTube URL" }
+  ]
+}
+{% endschema %}

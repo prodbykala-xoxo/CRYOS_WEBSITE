@@ -1,0 +1,39 @@
+{% comment %} Deliberately smaller footprint than LIVE/SHOP/MEDIA — see design-system.md §4 {% endcomment %}
+<section class="cry-section cry-section--music cry-container">
+  <div class="cry-section__head">
+    <h2 class="cry-section__title" style="font-size:22px;">MUSIC <span class="jp-gloss" style="font-size:14px;">音楽</span></h2>
+    <a href="{{ section.settings.music_page_url | default: '/pages/music' }}" class="btn">DISCOGRAPHY</a>
+  </div>
+
+  <div class="mbox flat" style="max-width:520px;">
+    <div class="mtitle">LATEST RELEASE</div>
+    <div style="display:flex;gap:16px;align-items:center;">
+      {% if section.settings.cover_image %}
+        <div class="shot" style="width:88px;height:88px;flex:none;">
+          {{ section.settings.cover_image | image_url: width: 176 | image_tag: loading: 'lazy' }}
+        </div>
+      {% endif %}
+      <div>
+        <div class="v" style="font-family:var(--disp);font-size:18px;">{{ section.settings.release_title }}</div>
+        <div class="k" style="margin-top:4px;">{{ section.settings.release_type }}</div>
+        {% if section.settings.streaming_url != blank %}
+          <a href="{{ section.settings.streaming_url }}" class="btn" style="margin-top:10px;padding:.5em 1em;">LISTEN</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Music — Teaser",
+  "settings": [
+    { "type": "url", "id": "music_page_url", "label": "MUSIC page URL" },
+    { "type": "text", "id": "release_title", "label": "Release title" },
+    { "type": "text", "id": "release_type", "label": "Release type", "info": "e.g. EP, Single, Album" },
+    { "type": "image_picker", "id": "cover_image", "label": "Cover art" },
+    { "type": "url", "id": "streaming_url", "label": "Streaming link" }
+  ],
+  "presets": [{ "name": "Music — Teaser" }]
+}
+{% endschema %}

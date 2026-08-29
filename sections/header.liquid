@@ -1,0 +1,22 @@
+<header class="cry-header">
+  <a href="{{ routes.root_url }}" class="cry-header__logo">{{ shop.name | default: 'KALA' }}</a>
+
+  <nav class="cry-header__nav" aria-label="Primary">
+    <a href="{{ pages.live.url | default: '/pages/live' }}">Live</a>
+    <a href="{{ pages.music.url | default: '/pages/music' }}">Music</a>
+    <a href="{{ pages.media.url | default: '/pages/media' }}">Media</a>
+    <a href="{{ routes.all_products_collection_url }}">Shop</a>
+    <a href="{{ pages.system.url | default: '/pages/system' }}">System</a>
+  </nav>
+
+  <button class="cry-header__cart" data-cart-open type="button" aria-haspopup="dialog">
+    CART [{{ cart.item_count | prepend: '00' | slice: -2, 2 }}]
+  </button>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": []
+}
+{% endschema %}

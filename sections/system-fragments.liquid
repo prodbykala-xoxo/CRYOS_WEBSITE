@@ -1,0 +1,60 @@
+{% comment %}
+  SYSTEM / WORLD — a sparse, hand-curated index. Only titles + IDs show by
+  default; each fragment expands in place on click. Never dump full lore
+  on first view (brief §12).
+{% endcomment %}
+<div class="cry-container" style="padding-block:48px;max-width:820px;">
+  <div class="mtitle">SYSTEM <span class="jp-gloss">システム</span><span class="meta">{{ section.blocks.size }} FRAGMENTS INDEXED</span></div>
+
+  <div>
+    {% for block in section.blocks %}
+      <div class="mbox flat" style="margin-bottom:16px;">
+        <button type="button" class="fragment-toggle" data-fragment-toggle aria-expanded="false"
+          style="width:100%;text-align:left;background:none;border:none;cursor:pointer;padding:0;">
+          <div class="mtitle" style="margin-bottom:0;">
+            FRAGMENT_{{ forloop.index | prepend: '00' | slice: -2, 2 }}
+            <span class="jp-gloss">{{ block.settings.jp_title }}</span>
+            <span class="meta">[ + ]</span>
+          </div>
+          <div class="v" style="font-size:14px;margin-top:6px;">{{ block.settings.title }}</div>
+        </button>
+        <div data-fragment-body style="display:none;margin-top:14px;font-family:var(--ui);color:var(--ink-dim);font-size:14px;">
+          {{ block.settings.body }}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-fragment-toggle]');
+    if (!btn) return;
+    var body = btn.parentElement.querySelector('[data-fragment-body]');
+    var open = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+    if (body) body.style.display = open ? 'none' : 'block';
+    var marker = btn.querySelector('.meta');
+    if (marker) marker.textContent = open ? '[ + ]' : '[ - ]';
+  });
+</script>
+
+{% schema %}
+{
+  "name": "System — Fragments",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "fragment",
+      "name": "Fragment",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title (EN)" },
+        { "type": "text", "id": "jp_title", "label": "Title (JP gloss)" },
+        { "type": "textarea", "id": "body", "label": "Body text" }
+      ]
+    }
+  ],
+  "max_blocks": 40,
+  "presets": [{ "name": "System — Fragments" }]
+}
+{% endschema %}

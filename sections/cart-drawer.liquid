@@ -1,0 +1,47 @@
+<div class="cart-overlay" data-cart-overlay></div>
+
+<aside class="cart-drawer mbox" data-cart-drawer role="dialog" aria-modal="true" aria-label="Cart">
+  <div class="mtitle">
+    CART <span class="jp-gloss">カート</span>
+    <span class="meta">{{ cart.item_count }} ITEM{% if cart.item_count != 1 %}S{% endif %}</span>
+  </div>
+
+  <button type="button" data-cart-close aria-label="Close cart" style="position:absolute;top:16px;right:16px;background:none;border:none;color:var(--ink);font-family:var(--tel);cursor:pointer;">
+    [ X ]
+  </button>
+
+  <div style="flex:1;overflow-y:auto;margin-top:8px;">
+    {% if cart.item_count == 0 %}
+      <p class="status pending">CART_EMPTY // NO ITEMS EQUIPPED</p>
+    {% else %}
+      {% for item in cart.items %}
+        <div class="row" style="align-items:center;">
+          <div style="width:56px;height:56px;flex:none;border:1px solid var(--line-hot);overflow:hidden;">
+            {% if item.image %}
+              <img src="{{ item.image | image_url: width: 112 }}" alt="{{ item.title | escape }}" width="56" height="56" style="object-fit:cover;">
+            {% endif %}
+          </div>
+          <div style="flex:1;">
+            <div class="v" style="font-size:13px;">{{ item.product.title }}</div>
+            <div class="k" style="min-width:0;">{{ item.variant.title }} · QTY {{ item.quantity }}</div>
+          </div>
+          <div class="v" style="font-family:var(--tel);">{{ item.final_line_price | money }}</div>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  {% if cart.item_count > 0 %}
+    <div style="border-top:1px solid var(--line-hot);padding-top:16px;margin-top:16px;">
+      <div class="row" style="padding-left:0;">
+        <span class="k" style="min-width:auto;">SUBTOTAL</span>
+        <span class="v" style="font-family:var(--tel);margin-left:auto;">{{ cart.total_price | money }}</span>
+      </div>
+      <a href="{{ routes.cart_url }}" class="btn solid" style="width:100%;margin-top:12px;">CHECKOUT</a>
+    </div>
+  {% endif %}
+</aside>
+
+{% schema %}
+{ "name": "Cart drawer", "settings": [] }
+{% endschema %}

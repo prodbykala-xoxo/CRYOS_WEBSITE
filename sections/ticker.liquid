@@ -1,0 +1,37 @@
+<div class="cry-ticker" aria-label="Announcements">
+  <div class="cry-ticker__track">
+    {% for i in (1..2) %}
+      {% for block in section.blocks %}
+        <span class="cry-ticker__item">
+          <span class="{% if block.settings.accent %}accent{% endif %}">{{ block.settings.text }}</span>
+        </span>
+      {% endfor %}
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Ticker",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "line",
+      "name": "Line",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text" },
+        { "type": "checkbox", "id": "accent", "label": "Accent color", "default": false }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "line", "settings": { "text": "CRY OS v2.6 // SESSION LIVE", "accent": true } },
+      { "type": "line", "settings": { "text": "LIGHT FADE TOUR — TICKETS ON SALE NOW", "accent": false } },
+      { "type": "line", "settings": { "text": "SYNC ... 98%", "accent": true } },
+      { "type": "line", "settings": { "text": "NEW MERCH — CRY OS ARCHIVE DROP", "accent": false } }
+    ]
+  },
+  "presets": [{ "name": "Ticker" }]
+}
+{% endschema %}

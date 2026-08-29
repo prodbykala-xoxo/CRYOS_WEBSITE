@@ -1,0 +1,36 @@
+<section class="cry-section cry-container">
+  <div class="cry-section__head">
+    <h2 class="cry-section__title">MEDIA <span class="jp-gloss" style="font-size:16px;">メディア</span></h2>
+    <a href="{{ section.settings.media_page_url | default: '/pages/media' }}" class="btn">ALL TRANSMISSIONS</a>
+  </div>
+
+  {% if section.settings.video != blank or section.settings.thumbnail %}
+    <div class="mbox flat">
+      <div class="mtitle">
+        TRANSMISSION_{{ section.settings.transmission_id | default: '001' }}
+        <span class="meta">{{ section.settings.subtitle }}</span>
+      </div>
+      <div class="shot" style="aspect-ratio:16/9;">
+        {% if section.settings.video != blank %}
+          {{ section.settings.video | video_tag: controls: true }}
+        {% elsif section.settings.thumbnail %}
+          {{ section.settings.thumbnail | image_url: width: 1600 | image_tag: loading: 'lazy' }}
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Media — Teaser",
+  "settings": [
+    { "type": "url", "id": "media_page_url", "label": "MEDIA page URL" },
+    { "type": "text", "id": "transmission_id", "label": "Transmission ID", "default": "001" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle", "info": "e.g. LIGHT FADE // TOKYO" },
+    { "type": "video", "id": "video", "label": "Video" },
+    { "type": "image_picker", "id": "thumbnail", "label": "Thumbnail (used if no video)" }
+  ],
+  "presets": [{ "name": "Media — Teaser" }]
+}
+{% endschema %}

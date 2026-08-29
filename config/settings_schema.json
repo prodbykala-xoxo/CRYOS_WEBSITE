@@ -1,0 +1,19 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "CRY OS — KALA",
+    "theme_version": "0.1.0",
+    "theme_author": "KALA",
+    "theme_documentation_url": "",
+    "theme_support_url": ""
+  },
+  {
+    "name": "General",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Colors and type are fixed by the CRY OS design system (see /docs/design-system.md and /docs/cry-os-one-sheet.md) and are not exposed here — the palette is deliberately restrained and should not be edited per-merchant."
+      }
+    ]
+  }
+]

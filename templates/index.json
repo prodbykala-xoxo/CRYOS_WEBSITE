@@ -1,0 +1,31 @@
+{
+  "sections": {
+    "ticker": { "type": "ticker" },
+    "hero": { "type": "hero-next-event" },
+    "live": {
+      "type": "live-teaser",
+      "settings": { "live_page_url": "/pages/live" }
+    },
+    "shop": {
+      "type": "shop-teaser",
+      "settings": { "products_to_show": 4 }
+    },
+    "media": {
+      "type": "media-teaser",
+      "settings": { "media_page_url": "/pages/media" }
+    },
+    "music": {
+      "type": "music-teaser",
+      "settings": { "music_page_url": "/pages/music" }
+    },
+    "system": {
+      "type": "system-teaser",
+      "settings": {
+        "system_page_url": "/pages/system",
+        "fragment_id": "01",
+        "fragment_text": "CRY OS has been running longer than anyone has been watching."
+      }
+    }
+  },
+  "order": ["ticker", "hero", "live", "shop", "media", "music", "system"]
+}

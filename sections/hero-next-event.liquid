@@ -1,0 +1,84 @@
+{% liquid
+  assign next_event = section.blocks.first
+%}
+
+<div class="cry-hero" data-boot-sequence>
+  <div class="cry-hero__media">
+    {% if section.settings.background_video != blank %}
+      {{ section.settings.background_video | video_tag: autoplay: true, loop: true, muted: true, controls: false }}
+    {% elsif section.settings.background_image %}
+      {{ section.settings.background_image | image_url: width: 2400 | image_tag: loading: 'eager', fetchpriority: 'high' }}
+    {% endif %}
+  </div>
+
+  <div class="cry-hero__body cry-container">
+    <div data-boot-line style="opacity:0;">
+      <div class="cry-boot-line" style="font-family:var(--tel);font-size:12px;color:var(--ink-faint);letter-spacing:.1em;">&gt; mounting /kala/session ......... <span class="status ok">OK</span></div>
+    </div>
+    <div data-boot-line style="opacity:0;">
+      <div class="cry-boot-line" style="font-family:var(--tel);font-size:12px;color:var(--ink-faint);letter-spacing:.1em;">&gt; decrypting identity ............ <span class="status ok">OK</span></div>
+    </div>
+
+    <h1 class="cry-hero__title" data-boot-line style="opacity:0;">{{ shop.name | default: 'KALA' }}</h1>
+
+    {% if next_event %}
+      <div class="mbox event-panel" data-boot-line style="opacity:0;">
+        <div class="mtitle">
+          NEXT EVENT <span class="jp-gloss">次のイベント</span>
+          <span class="meta">{{ next_event.settings.event_id | default: 'EVENT_001' }}</span>
+        </div>
+        <div class="tour">{{ next_event.settings.tour_name }}</div>
+        <div class="row">
+          <span class="k">DATE</span><span class="v">{{ next_event.settings.date }}</span>
+        </div>
+        <div class="row">
+          <span class="k">LOCATION</span><span class="v">{{ next_event.settings.city }} / {{ next_event.settings.country }}</span>
+        </div>
+        <div class="row">
+          <span class="k">VENUE</span><span class="v">{{ next_event.settings.venue }}</span>
+        </div>
+        <div class="row" style="border-bottom:none;padding-top:12px;">
+          <span class="status {{ next_event.settings.status | default: 'ok' }}">{{ next_event.settings.status_label | default: 'TICKETS AVAILABLE' }}</span>
+        </div>
+        <a href="{{ next_event.settings.ticket_url | default: '#' }}" class="btn solid" style="width:100%;margin-top:12px;">GET TICKETS</a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Hero — Next Event",
+  "settings": [
+    { "type": "image_picker", "id": "background_image", "label": "Background image" },
+    { "type": "video", "id": "background_video", "label": "Background video (overrides image)" }
+  ],
+  "blocks": [
+    {
+      "type": "event",
+      "name": "Event",
+      "settings": [
+        { "type": "text", "id": "event_id", "label": "Event ID", "default": "EVENT_001" },
+        { "type": "text", "id": "tour_name", "label": "Tour / event name" },
+        { "type": "text", "id": "date", "label": "Date", "info": "e.g. 08.19.2026" },
+        { "type": "text", "id": "city", "label": "City" },
+        { "type": "text", "id": "country", "label": "Country" },
+        { "type": "text", "id": "venue", "label": "Venue" },
+        {
+          "type": "select", "id": "status", "label": "Status",
+          "options": [
+            { "value": "ok", "label": "On sale" },
+            { "value": "pending", "label": "Limited / almost sold out" },
+            { "value": "err", "label": "Sold out" }
+          ],
+          "default": "ok"
+        },
+        { "type": "text", "id": "status_label", "label": "Status label", "default": "TICKETS AVAILABLE" },
+        { "type": "url", "id": "ticket_url", "label": "Ticket link" }
+      ]
+    }
+  ],
+  "max_blocks": 1,
+  "presets": [{ "name": "Hero — Next Event", "blocks": [{ "type": "event" }] }]
+}
+{% endschema %}

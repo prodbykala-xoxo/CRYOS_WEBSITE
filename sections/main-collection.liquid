@@ -1,0 +1,26 @@
+<div class="cry-container" style="padding-block:48px;">
+  <div class="mtitle">
+    {{ collection.title | upcase }}
+    <span class="meta">{{ collection.products_count }} ITEMS</span>
+  </div>
+
+  <div class="cry-grid cry-grid--4">
+    {% paginate collection.products by 24 %}
+      {% for product in collection.products %}
+        {% render 'product-card', product: product, index: forloop.index %}
+      {% endfor %}
+
+      {% if paginate.pages > 1 %}
+        <div style="grid-column:1/-1;display:flex;gap:8px;justify-content:center;margin-top:24px;">
+          {% if paginate.previous %}<a href="{{ paginate.previous.url }}" class="btn">PREV</a>{% endif %}
+          <span class="k" style="align-self:center;">PAGE {{ paginate.current_page }} / {{ paginate.pages }}</span>
+          {% if paginate.next %}<a href="{{ paginate.next.url }}" class="btn">NEXT</a>{% endif %}
+        </div>
+      {% endif %}
+    {% endpaginate %}
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Main collection", "settings": [] }
+{% endschema %}

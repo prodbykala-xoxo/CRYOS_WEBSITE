@@ -1,0 +1,38 @@
+<div class="cry-container" style="padding-block:48px;max-width:800px;">
+  <div class="mtitle">CART <span class="jp-gloss">カート</span><span class="meta">{{ cart.item_count }} ITEMS</span></div>
+
+  {% if cart.item_count == 0 %}
+    <p class="status pending">CART_EMPTY // NO ITEMS EQUIPPED</p>
+    <a href="{{ routes.all_products_collection_url }}" class="btn solid" style="margin-top:16px;">BROWSE SHOP</a>
+  {% else %}
+    {% form 'cart', cart %}
+      {% for item in cart.items %}
+        <div class="row" style="align-items:center;padding-left:0;">
+          <div style="width:64px;height:64px;flex:none;border:1px solid var(--line-hot);overflow:hidden;">
+            {% if item.image %}{{ item.image | image_url: width: 128 | image_tag: loading: 'lazy' }}{% endif %}
+          </div>
+          <div style="flex:1;">
+            <div class="v" style="font-size:14px;">{{ item.product.title }}</div>
+            <div class="k" style="min-width:0;">{{ item.variant.title }}</div>
+          </div>
+          <input type="number" name="updates[{{ item.key }}]" value="{{ item.quantity }}" min="0" style="width:56px;background:var(--sunk);border:1px solid var(--line-hot);color:var(--ink);font-family:var(--tel);padding:.5em;">
+          <div class="v" style="font-family:var(--tel);width:6em;text-align:right;">{{ item.final_line_price | money }}</div>
+        </div>
+      {% endfor %}
+
+      <div style="border-top:1px solid var(--line-hot);padding-top:16px;margin-top:16px;display:flex;justify-content:space-between;align-items:center;">
+        <button type="submit" name="update" class="btn">UPDATE CART</button>
+        <div>
+          <span class="k">SUBTOTAL</span>
+          <span class="v" style="font-family:var(--tel);margin-left:8px;">{{ cart.total_price | money }}</span>
+        </div>
+      </div>
+
+      <button type="submit" name="checkout" class="btn solid" style="width:100%;margin-top:16px;">CHECKOUT</button>
+    {% endform %}
+  {% endif %}
+</div>
+
+{% schema %}
+{ "name": "Main cart", "settings": [] }
+{% endschema %}

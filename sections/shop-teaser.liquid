@@ -1,0 +1,26 @@
+<section class="cry-section cry-container">
+  <div class="cry-section__head">
+    <h2 class="cry-section__title">SHOP <span class="jp-gloss" style="font-size:16px;">ショップ</span></h2>
+    <a href="{{ routes.all_products_collection_url }}" class="btn">VIEW ALL</a>
+  </div>
+
+  <div class="cry-grid cry-grid--4">
+    {% assign featured_collection = collections[section.settings.collection] %}
+    {% if featured_collection %}
+      {% for product in featured_collection.products limit: section.settings.products_to_show %}
+        {% render 'product-card', product: product, index: forloop.index %}
+      {% endfor %}
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Shop — Teaser",
+  "settings": [
+    { "type": "collection", "id": "collection", "label": "Collection to feature" },
+    { "type": "range", "id": "products_to_show", "label": "Products to show", "min": 2, "max": 8, "step": 1, "default": 4 }
+  ],
+  "presets": [{ "name": "Shop — Teaser" }]
+}
+{% endschema %}

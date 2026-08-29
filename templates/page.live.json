@@ -1,0 +1,10 @@
+{
+  "sections": {
+    "events": { "type": "live-events" },
+    "archive_strip": {
+      "type": "live-archive-strip",
+      "settings": { "archive_page_url": "/pages/live-archive" }
+    }
+  },
+  "order": ["events", "archive_strip"]
+}

@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "transmissions": { "type": "transmissions-list" }
+  },
+  "order": ["transmissions"]
+}

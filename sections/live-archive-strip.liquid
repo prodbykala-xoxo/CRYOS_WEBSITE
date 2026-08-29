@@ -1,0 +1,36 @@
+{% comment %}
+  Teaser strip of past shows, pulling from a blog named "live-archive"
+  (create it in Shopify admin → Online Store → Blog posts). Each article
+  = one past event; tag articles with year/tour for filtering on the full
+  archive page.
+{% endcomment %}
+<section class="cry-container cry-section">
+  <div class="cry-section__head">
+    <h2 class="cry-section__title" style="font-size:22px;">LIVE_ARCHIVE <span class="jp-gloss" style="font-size:14px;">過去の公演</span></h2>
+    <a href="{{ section.settings.archive_page_url | default: '/pages/live-archive' }}" class="btn">FULL ARCHIVE</a>
+  </div>
+
+  {% assign archive_blog = blogs['live-archive'] %}
+  <div class="cry-grid cry-grid--4">
+    {% if archive_blog %}
+      {% for article in archive_blog.articles limit: 4 %}
+        <a href="{{ article.url }}" class="shot" style="aspect-ratio:4/5;">
+          {% if article.image %}{{ article.image | image_url: width: 600 | image_tag: loading: 'lazy' }}{% endif %}
+          <figcaption>{{ article.title | upcase }}</figcaption>
+        </a>
+      {% endfor %}
+    {% else %}
+      <p class="status pending">ARCHIVE_BLOG_NOT_FOUND // create a blog handled "live-archive"</p>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Live archive — Strip",
+  "settings": [
+    { "type": "url", "id": "archive_page_url", "label": "Archive page URL" }
+  ],
+  "presets": [{ "name": "Live archive — Strip" }]
+}
+{% endschema %}

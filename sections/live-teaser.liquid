@@ -1,0 +1,56 @@
+<section class="cry-section cry-container">
+  <div class="cry-section__head">
+    <h2 class="cry-section__title">LIVE <span class="jp-gloss" style="font-size:16px;">ライブ</span></h2>
+    <a href="{{ section.settings.live_page_url | default: '/pages/live' }}" class="btn">ALL DATES</a>
+  </div>
+
+  <div>
+    {% for block in section.blocks %}
+      <div class="event-row">
+        <div class="event-row__id">{{ block.settings.event_id }}</div>
+        <div class="event-row__date">{{ block.settings.date }}</div>
+        <div class="event-row__place">
+          {{ block.settings.city }} / {{ block.settings.country }}
+          <span class="sub">{{ block.settings.venue }}</span>
+        </div>
+        <div class="status {{ block.settings.status | default: 'ok' }}">{{ block.settings.status_label | default: 'AVAILABLE' }}</div>
+        <a href="{{ block.settings.ticket_url | default: '#' }}" class="btn" style="padding:.6em 1.2em;">TICKETS</a>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Live — Teaser",
+  "settings": [
+    { "type": "url", "id": "live_page_url", "label": "LIVE page URL" }
+  ],
+  "blocks": [
+    {
+      "type": "event",
+      "name": "Event",
+      "settings": [
+        { "type": "text", "id": "event_id", "label": "Event ID", "default": "EVENT_002" },
+        { "type": "text", "id": "date", "label": "Date" },
+        { "type": "text", "id": "city", "label": "City" },
+        { "type": "text", "id": "country", "label": "Country" },
+        { "type": "text", "id": "venue", "label": "Venue" },
+        {
+          "type": "select", "id": "status", "label": "Status",
+          "options": [
+            { "value": "ok", "label": "On sale" },
+            { "value": "pending", "label": "Limited" },
+            { "value": "err", "label": "Sold out" }
+          ],
+          "default": "ok"
+        },
+        { "type": "text", "id": "status_label", "label": "Status label", "default": "AVAILABLE" },
+        { "type": "url", "id": "ticket_url", "label": "Ticket link" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [{ "name": "Live — Teaser" }]
+}
+{% endschema %}
