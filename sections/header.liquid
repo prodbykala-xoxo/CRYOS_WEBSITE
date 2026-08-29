@@ -1,5 +1,7 @@
 <header class="cry-header">
-  <a href="{{ routes.root_url }}" class="cry-header__logo">{{ shop.name | default: 'KALA' }}</a>
+  <a href="{{ routes.root_url }}" class="cry-header__logo" aria-label="{{ shop.name | default: 'KALA' }}">
+    <img src="{{ 'logo-white.png' | asset_url }}" alt="{{ shop.name | default: 'KALA' }}" width="120" height="72" style="height:28px;width:auto;display:block;">
+  </a>
 
   <nav class="cry-header__nav" aria-label="Primary">
     <a href="{{ pages.live.url | default: '/pages/live' }}">Live</a>

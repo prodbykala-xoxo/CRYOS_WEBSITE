@@ -7,7 +7,7 @@
   <div class="mtitle">TRANSMISSIONS <span class="jp-gloss">記録映像</span></div>
 
   {% assign feed = blogs['transmissions'] %}
-  {% if feed %}
+  {% if feed and feed.articles.size > 0 %}
     {% for article in feed.articles %}
       <div class="mbox flat" style="margin-bottom:32px;">
         <div class="mtitle">
@@ -26,7 +26,20 @@
       </div>
     {% endfor %}
   {% else %}
-    <p class="status pending">TRANSMISSIONS_BLOG_NOT_FOUND // create a blog handled "transmissions" in the Shopify admin</p>
+    {% comment %} Demo content until a "transmissions" blog exists — swap for real articles. {% endcomment %}
+    {% assign demo = 'video-still-desert.jpg|LIGHT FADE — DESERT SESSION,video-still-blue-room.jpg|LOCK IN — REHEARSAL ROOM,video-still-eye.jpg|KINGSBLOOD — CLOSE' | split: ',' %}
+    {% for entry in demo %}
+      {% assign parts = entry | split: '|' %}
+      <div class="mbox flat" style="margin-bottom:32px;">
+        <div class="mtitle">
+          TRANSMISSION_{{ forloop.index | prepend: '000' | slice: -3, 3 }}
+        </div>
+        <div class="shot" style="aspect-ratio:16/9;margin-bottom:16px;">
+          <img src="{{ parts[0] | asset_url }}" alt="" loading="lazy">
+        </div>
+        <div class="v" style="font-size:16px;">{{ parts[1] }}</div>
+      </div>
+    {% endfor %}
   {% endif %}
 </div>
 

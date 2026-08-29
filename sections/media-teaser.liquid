@@ -4,21 +4,21 @@
     <a href="{{ section.settings.media_page_url | default: '/pages/media' }}" class="btn">ALL TRANSMISSIONS</a>
   </div>
 
-  {% if section.settings.video != blank or section.settings.thumbnail %}
-    <div class="mbox flat">
-      <div class="mtitle">
-        TRANSMISSION_{{ section.settings.transmission_id | default: '001' }}
-        <span class="meta">{{ section.settings.subtitle }}</span>
-      </div>
-      <div class="shot" style="aspect-ratio:16/9;">
-        {% if section.settings.video != blank %}
-          {{ section.settings.video | video_tag: controls: true }}
-        {% elsif section.settings.thumbnail %}
-          {{ section.settings.thumbnail | image_url: width: 1600 | image_tag: loading: 'lazy' }}
-        {% endif %}
-      </div>
+  <div class="mbox flat">
+    <div class="mtitle">
+      TRANSMISSION_{{ section.settings.transmission_id | default: '001' }}
+      <span class="meta">{{ section.settings.subtitle }}</span>
     </div>
-  {% endif %}
+    <div class="shot" style="aspect-ratio:16/9;">
+      {% if section.settings.video != blank %}
+        {{ section.settings.video | video_tag: controls: true }}
+      {% elsif section.settings.thumbnail %}
+        {{ section.settings.thumbnail | image_url: width: 1600 | image_tag: loading: 'lazy' }}
+      {% else %}
+        <img src="{{ 'video-still-desert.jpg' | asset_url }}" alt="" loading="lazy">
+      {% endif %}
+    </div>
+  </div>
 </section>
 
 {% schema %}

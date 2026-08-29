@@ -16,6 +16,8 @@
         <div class="status {{ block.settings.status | default: 'ok' }}">{{ block.settings.status_label | default: 'AVAILABLE' }}</div>
         <a href="{{ block.settings.ticket_url | default: '#' }}" class="btn" style="padding:.6em 1.2em;">TICKETS</a>
       </div>
+    {% else %}
+      <p class="status pending">NO SCHEDULED TRANSMISSIONS // CHECK BACK SOON</p>
     {% endfor %}
   </div>
 </section>

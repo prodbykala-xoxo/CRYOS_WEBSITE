@@ -1,6 +1,6 @@
 {% comment %} Discoverable, not a summary — one fragment only. Per brief §12. {% endcomment %}
-<section class="cry-section cry-container">
-  <div class="mbox" style="max-width:640px;">
+<section class="cry-section cry-container" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;">
+  <div class="mbox">
     <div class="mtitle">
       SYSTEM <span class="jp-gloss">システム</span>
       <span class="meta">FRAGMENT // {{ section.settings.fragment_id | default: '0X' }}</span>
@@ -10,7 +10,16 @@
     </p>
     <a href="{{ section.settings.system_page_url | default: '/pages/system' }}" class="btn amber" style="margin-top:12px;">ENTER CRY OS</a>
   </div>
+  <div class="shot" style="aspect-ratio:16/9;">
+    <img src="{{ 'texture-halftone.jpg' | asset_url }}" alt="" loading="lazy">
+  </div>
 </section>
+
+<style>
+  @media (max-width: 768px) {
+    section.cry-section[style] { grid-template-columns: 1fr !important; }
+  }
+</style>
 
 {% schema %}
 {

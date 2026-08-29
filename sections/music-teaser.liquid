@@ -8,11 +8,13 @@
   <div class="mbox flat" style="max-width:520px;">
     <div class="mtitle">LATEST RELEASE</div>
     <div style="display:flex;gap:16px;align-items:center;">
-      {% if section.settings.cover_image %}
-        <div class="shot" style="width:88px;height:88px;flex:none;">
+      <div class="shot" style="width:88px;height:88px;flex:none;">
+        {% if section.settings.cover_image %}
           {{ section.settings.cover_image | image_url: width: 176 | image_tag: loading: 'lazy' }}
-        </div>
-      {% endif %}
+        {% else %}
+          <img src="{{ 'promo-light-fade.jpg' | asset_url }}" alt="" loading="lazy" style="object-fit:cover;width:100%;height:100%;">
+        {% endif %}
+      </div>
       <div>
         <div class="v" style="font-family:var(--disp);font-size:18px;">{{ section.settings.release_title }}</div>
         <div class="k" style="margin-top:4px;">{{ section.settings.release_type }}</div>

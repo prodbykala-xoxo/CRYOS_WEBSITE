@@ -1,7 +1,26 @@
 {
   "sections": {
     "ticker": { "type": "ticker" },
-    "hero": { "type": "hero-next-event" },
+    "hero": {
+      "type": "hero-next-event",
+      "blocks": {
+        "next_event": {
+          "type": "event",
+          "settings": {
+            "event_id": "EVENT_001",
+            "tour_name": "LIGHT FADE TOUR",
+            "date": "TBA",
+            "city": "TOKYO",
+            "country": "JAPAN",
+            "venue": "TBA",
+            "status": "pending",
+            "status_label": "DATE TBA — CHECK BACK SOON",
+            "ticket_url": ""
+          }
+        }
+      },
+      "block_order": ["next_event"]
+    },
     "live": {
       "type": "live-teaser",
       "settings": { "live_page_url": "/pages/live" }
@@ -12,11 +31,19 @@
     },
     "media": {
       "type": "media-teaser",
-      "settings": { "media_page_url": "/pages/media" }
+      "settings": {
+        "media_page_url": "/pages/media",
+        "transmission_id": "001",
+        "subtitle": "LIGHT FADE // DESERT SESSION"
+      }
     },
     "music": {
       "type": "music-teaser",
-      "settings": { "music_page_url": "/pages/music" }
+      "settings": {
+        "music_page_url": "/pages/music",
+        "release_title": "LIGHT FADE",
+        "release_type": "Single"
+      }
     },
     "system": {
       "type": "system-teaser",

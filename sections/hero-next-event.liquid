@@ -8,6 +8,8 @@
       {{ section.settings.background_video | video_tag: autoplay: true, loop: true, muted: true, controls: false }}
     {% elsif section.settings.background_image %}
       {{ section.settings.background_image | image_url: width: 2400 | image_tag: loading: 'eager', fetchpriority: 'high' }}
+    {% else %}
+      <img src="{{ 'hero-defiance.jpg' | asset_url }}" alt="" loading="eager" fetchpriority="high">
     {% endif %}
   </div>
 

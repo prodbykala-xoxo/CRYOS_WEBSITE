@@ -12,7 +12,7 @@
 
   {% assign archive_blog = blogs['live-archive'] %}
   <div class="cry-grid cry-grid--4">
-    {% if archive_blog %}
+    {% if archive_blog and archive_blog.articles.size > 0 %}
       {% for article in archive_blog.articles limit: 4 %}
         <a href="{{ article.url }}" class="shot" style="aspect-ratio:4/5;">
           {% if article.image %}{{ article.image | image_url: width: 600 | image_tag: loading: 'lazy' }}{% endif %}
@@ -20,7 +20,15 @@
         </a>
       {% endfor %}
     {% else %}
-      <p class="status pending">ARCHIVE_BLOG_NOT_FOUND // create a blog handled "live-archive"</p>
+      {% comment %} Demo content until a "live-archive" blog exists — swap for real articles. {% endcomment %}
+      {% assign demo_photos = 'tour-jp-01.jpg,tour-jp-02.jpg,tour-jp-03.jpg,tour-jp-04.jpg' | split: ',' %}
+      {% assign demo_labels = 'SEKAI//DIVIDE — NAGOYA,SEKAI//DIVIDE — OSAKA,SEKAI//DIVIDE — TOKYO,LIGHT FADE TOUR' | split: ',' %}
+      {% for photo in demo_photos %}
+        <div class="shot" style="aspect-ratio:4/5;">
+          <img src="{{ photo | asset_url }}" alt="" loading="lazy">
+          <figcaption>{{ demo_labels[forloop.index0] }}</figcaption>
+        </div>
+      {% endfor %}
     {% endif %}
   </div>
 </section>

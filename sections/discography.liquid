@@ -7,11 +7,13 @@
       <div class="mtitle">LATEST RELEASE</div>
       {% assign latest = section.blocks.first %}
       <div style="display:flex;gap:20px;align-items:center;">
-        {% if latest.settings.cover_image %}
-          <div class="shot" style="width:120px;height:120px;flex:none;">
+        <div class="shot" style="width:120px;height:120px;flex:none;">
+          {% if latest.settings.cover_image %}
             {{ latest.settings.cover_image | image_url: width: 240 | image_tag: loading: 'eager' }}
-          </div>
-        {% endif %}
+          {% else %}
+            <img src="{{ 'promo-light-fade.jpg' | asset_url }}" alt="" loading="eager" style="object-fit:cover;width:100%;height:100%;">
+          {% endif %}
+        </div>
         <div>
           <div class="v" style="font-family:var(--disp);font-size:22px;">{{ latest.settings.title }}</div>
           <div class="k" style="margin-top:6px;">{{ latest.settings.release_type }} · {{ latest.settings.release_date }}</div>

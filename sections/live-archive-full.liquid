@@ -7,7 +7,7 @@
 
   {% assign archive_blog = blogs['live-archive'] %}
   <div class="cry-grid cry-grid--3">
-    {% if archive_blog %}
+    {% if archive_blog and archive_blog.articles.size > 0 %}
       {% for article in archive_blog.articles %}
         <a href="{{ article.url }}" class="mbox flat" style="display:block;text-decoration:none;">
           <div class="shot" style="aspect-ratio:4/5;margin-bottom:12px;">
@@ -22,7 +22,19 @@
         </a>
       {% endfor %}
     {% else %}
-      <p class="status pending">ARCHIVE_BLOG_NOT_FOUND // create a blog handled "live-archive" in the Shopify admin, one article per past show</p>
+      {% comment %} Demo content until a "live-archive" blog exists — swap for real articles. {% endcomment %}
+      {% assign demo = 'tour-jp-01.jpg|SEKAI//DIVIDE — NAGOYA JAMMIN|02.11.2026,tour-jp-02.jpg|SEKAI//DIVIDE — OSAKA Yogibo META VALLEY|02.13.2026,tour-jp-03.jpg|SEKAI//DIVIDE — TOKYO Spotify O-West|02.22.2026,tour-jp-04.jpg|LIGHT FADE TOUR — TOKYO clubasia|08.19.2026' | split: ',' %}
+      {% for entry in demo %}
+        {% assign parts = entry | split: '|' %}
+        <div class="mbox flat">
+          <div class="shot" style="aspect-ratio:4/5;margin-bottom:12px;">
+            <img src="{{ parts[0] | asset_url }}" alt="" loading="lazy">
+            <figcaption>EVENT_{{ forloop.index | prepend: '000' | slice: -3, 3 }}</figcaption>
+          </div>
+          <div class="v" style="font-size:14px;">{{ parts[1] }}</div>
+          <div class="k" style="margin-top:4px;">{{ parts[2] }}</div>
+        </div>
+      {% endfor %}
     {% endif %}
   </div>
 </div>

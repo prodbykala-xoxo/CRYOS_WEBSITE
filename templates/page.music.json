@@ -1,6 +1,35 @@
 {
   "sections": {
-    "discography": { "type": "discography" }
+    "discography": {
+      "type": "discography",
+      "blocks": {
+        "release_1": {
+          "type": "release",
+          "settings": { "title": "LIGHT FADE", "release_type": "Single", "release_date": "2026" }
+        },
+        "release_2": {
+          "type": "release",
+          "settings": { "title": "SEKAI//DIVIDE", "release_type": "EP", "release_date": "2026" }
+        },
+        "release_3": {
+          "type": "release",
+          "settings": { "title": "KINGSBLOOD", "release_type": "Single", "release_date": "2025" }
+        },
+        "release_4": {
+          "type": "release",
+          "settings": { "title": "LOCK IN", "release_type": "Single", "release_date": "2025" }
+        },
+        "release_5": {
+          "type": "release",
+          "settings": { "title": "Diary of a Depressed Creative", "release_type": "EP", "release_date": "2023" }
+        },
+        "release_6": {
+          "type": "release",
+          "settings": { "title": "If I Could Go Back", "release_type": "EP", "release_date": "2021" }
+        }
+      },
+      "block_order": ["release_1", "release_2", "release_3", "release_4", "release_5", "release_6"]
+    }
   },
   "order": ["discography"]
 }
