@@ -318,6 +318,34 @@ button { font-family: inherit; }
 .cry-hero__media { position: absolute; inset: 0; z-index: 0; }
 .cry-hero__media img, .cry-hero__media video { width: 100%; height: 100%; object-fit: cover; filter: saturate(.85) contrast(1.05); }
 .cry-hero__media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8,9,11,.2) 0%, rgba(8,9,11,.92) 100%); }
+
+/* Cycling hero rotation — 7 stills, pure-CSS sequential crossfade.
+   One shared 49s timeline (7 images x 7s each), each image offset by its
+   own animation-delay so exactly one is visible at a time. */
+.cry-hero__rotation { position: absolute; inset: 0; }
+.cry-hero__rotation img {
+  position: absolute; inset: 0;
+  opacity: 0;
+  animation: cry-hero-cycle 49s infinite;
+}
+.cry-hero__rotation img:nth-child(1) { animation-delay: 0s; }
+.cry-hero__rotation img:nth-child(2) { animation-delay: 7s; }
+.cry-hero__rotation img:nth-child(3) { animation-delay: 14s; }
+.cry-hero__rotation img:nth-child(4) { animation-delay: 21s; }
+.cry-hero__rotation img:nth-child(5) { animation-delay: 28s; }
+.cry-hero__rotation img:nth-child(6) { animation-delay: 35s; }
+.cry-hero__rotation img:nth-child(7) { animation-delay: 42s; }
+@keyframes cry-hero-cycle {
+  0%   { opacity: 0; }
+  3%   { opacity: 1; }
+  12%  { opacity: 1; }
+  15%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cry-hero__rotation img { animation: none; opacity: 0; }
+  .cry-hero__rotation img:first-child { opacity: 1; }
+}
 .cry-hero__body { position: relative; z-index: 2; width: 100%; padding: 48px 24px; display: flex; flex-direction: column; gap: 24px; }
 .cry-hero__title { font-size: clamp(48px, 10vw, 88px); letter-spacing: .01em; }
 
