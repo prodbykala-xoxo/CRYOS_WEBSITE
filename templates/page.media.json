@@ -1,6 +1,7 @@
 {
   "sections": {
+    "vlog": { "type": "vlog-embed" },
     "transmissions": { "type": "transmissions-list" }
   },
-  "order": ["transmissions"]
+  "order": ["vlog", "transmissions"]
 }

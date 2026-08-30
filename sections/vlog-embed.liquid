@@ -1,0 +1,46 @@
+{% comment %}
+  VLOG — embeds the real "Canadian in Japan" YouTube uploads feed rather
+  than a hand-maintained blog. New uploads show up automatically; nothing
+  in the theme needs touching when a new video goes up.
+  Channel: youtube.com/@canadianinjapanlife (UC4vl0FqF_8eJgvXc-GQ0ZlQ).
+  Uploads playlist id = channel id with UC swapped for UU.
+{% endcomment %}
+<section class="cry-container cry-section">
+  <div class="cry-section__head">
+    <h2 class="cry-section__title" style="font-size:22px;">VLOG <span class="jp-gloss" style="font-size:14px;">動画日記</span></h2>
+    <a href="{{ section.settings.channel_url | default: 'https://www.youtube.com/@canadianinjapanlife' }}" class="btn" target="_blank" rel="noopener">VIEW CHANNEL</a>
+  </div>
+
+  <div class="mbox flat">
+    <div class="mtitle">
+      CANADIAN IN JAPAN <span class="meta">LATEST UPLOADS</span>
+    </div>
+    <div class="shot" style="aspect-ratio:16/9;border:none;box-shadow:none;">
+      <iframe
+        src="https://www.youtube.com/embed/videoseries?list={{ section.settings.uploads_playlist_id | default: 'UU4vl0FqF_8eJgvXc-GQ0ZlQ' }}"
+        title="Canadian in Japan — latest uploads"
+        style="width:100%;height:100%;border:0;"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        loading="lazy"
+      ></iframe>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Vlog — YouTube embed",
+  "settings": [
+    { "type": "url", "id": "channel_url", "label": "Channel URL", "default": "https://www.youtube.com/@canadianinjapanlife" },
+    {
+      "type": "text",
+      "id": "uploads_playlist_id",
+      "label": "Uploads playlist ID",
+      "info": "Channel ID with UC replaced by UU. Default is the Canadian in Japan channel.",
+      "default": "UU4vl0FqF_8eJgvXc-GQ0ZlQ"
+    }
+  ],
+  "presets": [{ "name": "Vlog — YouTube embed" }]
+}
+{% endschema %}
