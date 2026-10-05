@@ -430,7 +430,10 @@ button { font-family: inherit; }
 .event-row__date { font-family: var(--tel); color: var(--ink); letter-spacing: .06em; }
 .event-row__place { color: var(--ink); font-family: var(--ui); }
 .event-row__place .sub { color: var(--ink-dim); font-size: 12px; display: block; margin-top: 2px; }
-.event-row__icon-slot { width: 40px; }
+.event-row__icon-slot {
+  width: 40px; align-self: stretch;
+  display: flex; align-items: center; justify-content: center;
+}
 .event-row__icon {
   display: block; width: 28px; height: 28px; object-fit: contain; padding: 3px;
   border: 1px solid var(--edge); border-radius: 3px; background: #05070c;
