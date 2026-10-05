@@ -6,26 +6,26 @@
 
   {% liquid
     assign today_num = 'now' | date: '%Y%m%d' | plus: 0
-    assign shows_blog = blogs['upcoming-shows']
+    assign all_events = shop.metaobjects['event'].values
     assign upcoming_count = 0
   %}
 
   <div>
-    {% for article in shows_blog.articles %}
-      {% assign ev_date = article.metafields.custom.event_date.value %}
+    {% for event in all_events %}
+      {% assign ev_date = event.event_date.value %}
       {% if ev_date %}
         {% assign d = ev_date | date: '%Y%m%d' | plus: 0 %}
         {% if d >= today_num %}
           {% assign upcoming_count = upcoming_count | plus: 1 %}
           <div class="event-row">
-            <div class="event-row__id">{{ article.handle | upcase }}</div>
+            <div class="event-row__id">{{ event.tour_name.value | upcase }}</div>
             <div class="event-row__date">{{ ev_date | date: '%m.%d.%Y' }}</div>
             <div class="event-row__place">
-              {{ article.metafields.custom.city.value }} / {{ article.metafields.custom.country.value }}
-              <span class="sub">{{ article.metafields.custom.venue.value }}</span>
+              {{ event.city.value }} / {{ event.country.value }}
+              <span class="sub">{{ event.venue.value }}</span>
             </div>
-            <div class="status {{ article.metafields.custom.status.value | default: 'ok' }}">{{ article.metafields.custom.status_label.value | default: 'AVAILABLE' }}</div>
-            <a href="{{ article.metafields.custom.ticket_url.value | default: '#' }}" class="btn" style="padding:.6em 1.2em;">TICKETS</a>
+            <div class="status {{ event.status.value | default: 'ok' }}">{{ event.status_label.value | default: 'AVAILABLE' }}</div>
+            <a href="{{ event.ticket_url.value | default: '#' }}" class="btn" style="padding:.6em 1.2em;">TICKETS</a>
           </div>
         {% endif %}
       {% endif %}

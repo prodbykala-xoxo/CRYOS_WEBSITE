@@ -1,20 +1,22 @@
 {% liquid
   comment
-    Auto-pulls the soonest upcoming show from the "upcoming-shows" blog
-    (filtered to event_date >= today). Falls back to a manually-set
-    block if the blog has no qualifying article yet, so this never
-    breaks before that blog exists.
+    Auto-pulls the soonest upcoming show from the "event" metaobject
+    type (filtered to event_date >= today) — the SAME single source
+    the homepage teaser and Live page list also read from, so an event
+    is only ever entered once. Falls back to a manually-set block if
+    no metaobject entry qualifies yet, so this never breaks before
+    that's set up.
   endcomment
   assign today_num = 'now' | date: '%Y%m%d' | plus: 0
-  assign shows_blog = blogs['upcoming-shows']
+  assign all_events = shop.metaobjects['event'].values
   assign auto_event = nil
   assign auto_event_num = 999999999
-  for article in shows_blog.articles
-    assign ev_date = article.metafields.custom.event_date.value
+  for event in all_events
+    assign ev_date = event.event_date.value
     if ev_date
       assign d = ev_date | date: '%Y%m%d' | plus: 0
       if d >= today_num and d < auto_event_num
-        assign auto_event = article
+        assign auto_event = event
         assign auto_event_num = d
       endif
     endif
@@ -60,51 +62,51 @@
     </div>
 
     <h1 class="cry-hero__title" data-boot-line style="opacity:0;">{{ shop.name | default: 'KALA' }}</h1>
-
-    {% if auto_event %}
-      <div class="mbox event-panel" data-boot-line style="opacity:0;">
-        <div class="mtitle">
-          NEXT EVENT <span class="jp-gloss">次のイベント</span>
-          <span class="meta">{{ auto_event.handle | upcase }}</span>
-        </div>
-        <div class="tour">{{ auto_event.title }}</div>
-        <div class="row">
-          <span class="k">DATE</span><span class="v">{{ auto_event.metafields.custom.event_date.value | date: '%m.%d.%Y' }}</span>
-        </div>
-        <div class="row">
-          <span class="k">LOCATION</span><span class="v">{{ auto_event.metafields.custom.city.value }} / {{ auto_event.metafields.custom.country.value }}</span>
-        </div>
-        <div class="row">
-          <span class="k">VENUE</span><span class="v">{{ auto_event.metafields.custom.venue.value }}</span>
-        </div>
-        <div class="row" style="border-bottom:none;padding-top:12px;">
-          <span class="status {{ auto_event.metafields.custom.status.value | default: 'ok' }}">{{ auto_event.metafields.custom.status_label.value | default: 'TICKETS AVAILABLE' }}</span>
-        </div>
-        <a href="{{ auto_event.metafields.custom.ticket_url.value | default: '#' }}" class="btn solid" style="width:100%;margin-top:12px;">GET TICKETS</a>
-      </div>
-    {% elsif fallback_event %}
-      <div class="mbox event-panel" data-boot-line style="opacity:0;">
-        <div class="mtitle">
-          NEXT EVENT <span class="jp-gloss">次のイベント</span>
-          <span class="meta">{{ fallback_event.settings.event_id | default: 'EVENT_001' }}</span>
-        </div>
-        <div class="tour">{{ fallback_event.settings.tour_name }}</div>
-        <div class="row">
-          <span class="k">DATE</span><span class="v">{{ fallback_event.settings.date }}</span>
-        </div>
-        <div class="row">
-          <span class="k">LOCATION</span><span class="v">{{ fallback_event.settings.city }} / {{ fallback_event.settings.country }}</span>
-        </div>
-        <div class="row">
-          <span class="k">VENUE</span><span class="v">{{ fallback_event.settings.venue }}</span>
-        </div>
-        <div class="row" style="border-bottom:none;padding-top:12px;">
-          <span class="status {{ fallback_event.settings.status | default: 'ok' }}">{{ fallback_event.settings.status_label | default: 'TICKETS AVAILABLE' }}</span>
-        </div>
-        <a href="{{ fallback_event.settings.ticket_url | default: '#' }}" class="btn solid" style="width:100%;margin-top:12px;">GET TICKETS</a>
-      </div>
-    {% endif %}
   </div>
+
+  {% if auto_event %}
+    <div class="mbox event-panel" data-boot-line style="opacity:0;">
+      <div class="mtitle">
+        NEXT EVENT <span class="jp-gloss">次のイベント</span>
+        <span class="meta">{{ auto_event.tour_name.value | upcase }}</span>
+      </div>
+      <div class="tour">{{ auto_event.tour_name.value }}</div>
+      <div class="row">
+        <span class="k">DATE</span><span class="v">{{ auto_event.event_date.value | date: '%m.%d.%Y' }}</span>
+      </div>
+      <div class="row">
+        <span class="k">LOCATION</span><span class="v">{{ auto_event.city.value }} / {{ auto_event.country.value }}</span>
+      </div>
+      <div class="row">
+        <span class="k">VENUE</span><span class="v">{{ auto_event.venue.value }}</span>
+      </div>
+      <div class="row" style="border-bottom:none;padding-top:12px;">
+        <span class="status {{ auto_event.status.value | default: 'ok' }}">{{ auto_event.status_label.value | default: 'TICKETS AVAILABLE' }}</span>
+      </div>
+      <a href="{{ auto_event.ticket_url.value | default: '#' }}" class="btn solid" style="width:100%;margin-top:12px;">GET TICKETS</a>
+    </div>
+  {% elsif fallback_event %}
+    <div class="mbox event-panel" data-boot-line style="opacity:0;">
+      <div class="mtitle">
+        NEXT EVENT <span class="jp-gloss">次のイベント</span>
+        <span class="meta">{{ fallback_event.settings.event_id | default: 'EVENT_001' }}</span>
+      </div>
+      <div class="tour">{{ fallback_event.settings.tour_name }}</div>
+      <div class="row">
+        <span class="k">DATE</span><span class="v">{{ fallback_event.settings.date }}</span>
+      </div>
+      <div class="row">
+        <span class="k">LOCATION</span><span class="v">{{ fallback_event.settings.city }} / {{ fallback_event.settings.country }}</span>
+      </div>
+      <div class="row">
+        <span class="k">VENUE</span><span class="v">{{ fallback_event.settings.venue }}</span>
+      </div>
+      <div class="row" style="border-bottom:none;padding-top:12px;">
+        <span class="status {{ fallback_event.settings.status | default: 'ok' }}">{{ fallback_event.settings.status_label | default: 'TICKETS AVAILABLE' }}</span>
+      </div>
+      <a href="{{ fallback_event.settings.ticket_url | default: '#' }}" class="btn solid" style="width:100%;margin-top:12px;">GET TICKETS</a>
+    </div>
+  {% endif %}
 </div>
 
 {% schema %}
