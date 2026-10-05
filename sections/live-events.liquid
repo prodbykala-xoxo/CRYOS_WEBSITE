@@ -7,6 +7,9 @@
         <div class="event-row__id">{{ block.settings.event_id }}</div>
         <div class="event-row__date">{{ block.settings.date }}</div>
         <div class="event-row__place">
+          {% if block.settings.promo_icon %}
+            <img class="event-row__icon" src="{{ block.settings.promo_icon | image_url: width: 80 }}" alt="" width="28" height="28">
+          {% endif %}
           {{ block.settings.tour_name }} — {{ block.settings.city }} / {{ block.settings.country }}
           <span class="sub">{{ block.settings.venue }}{% if block.settings.support != blank %} · w/ {{ block.settings.support }}{% endif %}</span>
         </div>
@@ -31,6 +34,7 @@
         { "type": "text", "id": "event_id", "label": "Event ID", "default": "EVENT_001" },
         { "type": "text", "id": "date", "label": "Date" },
         { "type": "text", "id": "tour_name", "label": "Tour / event name" },
+        { "type": "image_picker", "id": "promo_icon", "label": "Promo icon (optional)", "info": "Small logo/badge shown next to this entry, e.g. a sub-brand mark for a specific event series." },
         { "type": "text", "id": "city", "label": "City" },
         { "type": "text", "id": "country", "label": "Country" },
         { "type": "text", "id": "venue", "label": "Venue" },
