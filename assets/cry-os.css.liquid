@@ -422,7 +422,7 @@ button { font-family: inherit; }
    ------------------------------------------------------------------------- */
 
 .event-row {
-  display: grid; grid-template-columns: 90px 110px 1.4fr auto auto;
+  display: grid; grid-template-columns: 90px 110px 40px 1.4fr auto auto;
   align-items: center; gap: 16px; padding: 16px 0;
   border-bottom: 1px solid var(--line);
 }
@@ -430,12 +430,15 @@ button { font-family: inherit; }
 .event-row__date { font-family: var(--tel); color: var(--ink); letter-spacing: .06em; }
 .event-row__place { color: var(--ink); font-family: var(--ui); }
 .event-row__place .sub { color: var(--ink-dim); font-size: 12px; display: block; margin-top: 2px; }
+.event-row__icon-slot { width: 40px; }
 .event-row__icon {
-  width: 28px; height: 28px; object-fit: contain; vertical-align: middle;
-  margin-right: 10px; padding: 3px;
+  display: block; width: 28px; height: 28px; object-fit: contain; padding: 3px;
   border: 1px solid var(--edge); border-radius: 3px; background: #05070c;
 }
-@media (max-width: 768px) { .event-row { grid-template-columns: 1fr; gap: 6px; } }
+@media (max-width: 768px) {
+  .event-row { grid-template-columns: 1fr; gap: 6px; }
+  .event-row__icon-slot:empty { display: none; }
+}
 
 /* -------------------------------------------------------------------------
    Product card — stays inside the CRY OS dark system (shot + flat mbox),
