@@ -269,6 +269,28 @@ button { font-family: inherit; }
 .btn[disabled] { opacity: .4; cursor: not-allowed; }
 
 /* -------------------------------------------------------------------------
+   Article body — live-archive write-ups (rich text from the blog editor)
+   ------------------------------------------------------------------------- */
+
+.article-body { font-family: var(--ui); color: var(--ink); line-height: 1.75; font-size: 15px; }
+.article-body p { margin-bottom: 1.4em; }
+.article-body h2, .article-body h3 {
+  font-family: var(--disp); color: var(--ink); text-shadow: 1px 1px 0 #000;
+  margin: 1.6em 0 .6em;
+}
+.article-body a { color: var(--sig-hot); text-decoration: underline; text-underline-offset: 3px; }
+.article-body ul, .article-body ol { margin: 0 0 1.4em 1.4em; }
+.article-body img {
+  display: block; width: 100%; height: auto; margin: 1.6em 0;
+  border: 2px solid var(--edge); border-radius: 4px;
+  box-shadow: 0 0 0 1px #000, 0 10px 30px rgba(0,0,0,.7);
+}
+.article-body blockquote {
+  border-left: 2px solid var(--sig); padding-left: 16px; margin: 1.6em 0;
+  color: var(--ink-dim); font-style: italic;
+}
+
+/* -------------------------------------------------------------------------
    Header
    ------------------------------------------------------------------------- */
 

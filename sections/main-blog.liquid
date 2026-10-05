@@ -1,0 +1,39 @@
+{% comment %}
+  Native blog index (/blogs/live-archive) — safety net so this URL is
+  styled even though /pages/live-archive (live-archive-full.liquid) is
+  the primary, prettier entry point visitors are linked to.
+{% endcomment %}
+<div class="cry-container" style="padding-block:48px;">
+  <div class="mtitle">{{ blog.title | upcase }} <span class="meta">DATABASE</span></div>
+
+  <div class="cry-grid cry-grid--3">
+    {% paginate blog.articles by 12 %}
+      {% for article in blog.articles %}
+        <a href="{{ article.url }}" class="mbox flat" style="display:block;text-decoration:none;">
+          <div class="shot" style="aspect-ratio:4/5;margin-bottom:12px;">
+            {% if article.image %}{{ article.image | image_url: width: 600 | image_tag: loading: 'lazy' }}{% endif %}
+            <figcaption>EVENT_{{ forloop.index | prepend: '000' | slice: -3, 3 }}</figcaption>
+          </div>
+          <div class="v" style="font-size:14px;">{{ article.title }}</div>
+          <div class="k" style="margin-top:4px;">{{ article.published_at | date: '%m.%d.%Y' }}</div>
+          {% if article.tags.size > 0 %}
+            <div class="k" style="margin-top:4px;color:var(--ink-faint);">{{ article.tags | join: ' · ' }}</div>
+          {% endif %}
+        </a>
+      {% else %}
+        <p class="status pending">NO ENTRIES YET</p>
+      {% endfor %}
+
+      {% if paginate.pages > 1 %}
+        <div style="grid-column:1/-1;display:flex;gap:12px;justify-content:center;margin-top:24px;">
+          {% if paginate.previous %}<a href="{{ paginate.previous.url }}" class="btn">&larr; PREV</a>{% endif %}
+          {% if paginate.next %}<a href="{{ paginate.next.url }}" class="btn">NEXT &rarr;</a>{% endif %}
+        </div>
+      {% endif %}
+    {% endpaginate %}
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Blog — Index", "settings": [] }
+{% endschema %}

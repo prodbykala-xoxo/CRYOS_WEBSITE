@@ -1,0 +1,47 @@
+{% comment %}
+  Single blog article — used for live-archive entries (one show per
+  article: photos + write-up in the article body) but works for any
+  blog. Clicking a photo in live-archive-strip/live-archive-full lands
+  here.
+{% endcomment %}
+<article class="cry-container" style="padding-block:48px;max-width:760px;">
+  <a href="{{ section.settings.back_url | default: article.blog.url }}" class="btn" style="margin-bottom:24px;">&larr; BACK TO ARCHIVE</a>
+
+  <div class="mtitle" style="margin-top:20px;">
+    LIVE_ARCHIVE <span class="jp-gloss">過去の公演</span>
+    <span class="meta">{{ article.published_at | date: '%m.%d.%Y' }}</span>
+  </div>
+
+  {% if article.image %}
+    <div class="shot" style="aspect-ratio:16/9;margin:16px 0 24px;">
+      {{ article.image | image_url: width: 1600 | image_tag: loading: 'eager' }}
+    </div>
+  {% endif %}
+
+  <h1 style="font-family:var(--disp);font-size:28px;color:var(--ink);text-shadow:2px 2px 0 #000;margin-bottom:10px;">{{ article.title }}</h1>
+
+  {% if article.tags.size > 0 %}
+    <div class="k" style="margin-bottom:28px;color:var(--ink-faint);font-family:var(--tel);font-size:11px;letter-spacing:.1em;text-transform:uppercase;">{{ article.tags | join: ' · ' }}</div>
+  {% endif %}
+
+  <div class="article-body">
+    {{ article.content }}
+  </div>
+
+  {% if article.author %}
+    <div class="k" style="margin-top:32px;opacity:.6;font-family:var(--ui);">— {{ article.author }}</div>
+  {% endif %}
+
+  {% if article.comments_enabled? %}
+    {% comment %} Comments intentionally omitted — not part of the CRY OS layout. {% endcomment %}
+  {% endif %}
+</article>
+
+{% schema %}
+{
+  "name": "Article — Live Archive",
+  "settings": [
+    { "type": "url", "id": "back_url", "label": "Back link override", "info": "Defaults to the blog's own index if left blank." }
+  ]
+}
+{% endschema %}
