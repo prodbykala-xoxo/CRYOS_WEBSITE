@@ -1,24 +1,55 @@
 <section class="cry-container" style="padding-block:48px;">
   <div class="mtitle">UPCOMING <span class="jp-gloss">今後の公演</span></div>
 
+  {% liquid
+    assign today_num = 'now' | date: '%Y%m%d' | plus: 0
+    assign shows_blog = blogs['upcoming-shows']
+    assign upcoming_count = 0
+  %}
+
   <div>
-    {% for block in section.blocks %}
-      <div class="event-row">
-        <div class="event-row__id">{{ block.settings.event_id }}</div>
-        <div class="event-row__date">{{ block.settings.date }}</div>
-        <div class="event-row__place">
-          {% if block.settings.promo_icon %}
-            <img class="event-row__icon" src="{{ block.settings.promo_icon | image_url: width: 80 }}" alt="" width="28" height="28">
-          {% endif %}
-          {{ block.settings.tour_name }} — {{ block.settings.city }} / {{ block.settings.country }}
-          <span class="sub">{{ block.settings.venue }}{% if block.settings.support != blank %} · w/ {{ block.settings.support }}{% endif %}</span>
-        </div>
-        <div class="status {{ block.settings.status | default: 'ok' }}">{{ block.settings.status_label | default: 'TICKETS AVAILABLE' }}</div>
-        <a href="{{ block.settings.ticket_url | default: '#' }}" class="btn solid" style="padding:.6em 1.2em;">GET TICKETS</a>
-      </div>
-    {% else %}
-      <p class="status pending">NO SCHEDULED TRANSMISSIONS</p>
+    {% for article in shows_blog.articles %}
+      {% assign ev_date = article.metafields.custom.event_date.value %}
+      {% if ev_date %}
+        {% assign d = ev_date | date: '%Y%m%d' | plus: 0 %}
+        {% if d >= today_num %}
+          {% assign upcoming_count = upcoming_count | plus: 1 %}
+          <div class="event-row">
+            <div class="event-row__id">{{ article.handle | upcase }}</div>
+            <div class="event-row__date">{{ ev_date | date: '%m.%d.%Y' }}</div>
+            <div class="event-row__place">
+              {% if article.metafields.custom.promo_icon.value %}
+                <img class="event-row__icon" src="{{ article.metafields.custom.promo_icon.value | image_url: width: 80 }}" alt="" width="28" height="28">
+              {% endif %}
+              {{ article.title }} — {{ article.metafields.custom.city.value }} / {{ article.metafields.custom.country.value }}
+              <span class="sub">{{ article.metafields.custom.venue.value }}{% if article.metafields.custom.support.value != blank %} · w/ {{ article.metafields.custom.support.value }}{% endif %}</span>
+            </div>
+            <div class="status {{ article.metafields.custom.status.value | default: 'ok' }}">{{ article.metafields.custom.status_label.value | default: 'TICKETS AVAILABLE' }}</div>
+            <a href="{{ article.metafields.custom.ticket_url.value | default: '#' }}" class="btn solid" style="padding:.6em 1.2em;">GET TICKETS</a>
+          </div>
+        {% endif %}
+      {% endif %}
     {% endfor %}
+
+    {% if upcoming_count == 0 %}
+      {% for block in section.blocks %}
+        <div class="event-row">
+          <div class="event-row__id">{{ block.settings.event_id }}</div>
+          <div class="event-row__date">{{ block.settings.date }}</div>
+          <div class="event-row__place">
+            {% if block.settings.promo_icon %}
+              <img class="event-row__icon" src="{{ block.settings.promo_icon | image_url: width: 80 }}" alt="" width="28" height="28">
+            {% endif %}
+            {{ block.settings.tour_name }} — {{ block.settings.city }} / {{ block.settings.country }}
+            <span class="sub">{{ block.settings.venue }}{% if block.settings.support != blank %} · w/ {{ block.settings.support }}{% endif %}</span>
+          </div>
+          <div class="status {{ block.settings.status | default: 'ok' }}">{{ block.settings.status_label | default: 'TICKETS AVAILABLE' }}</div>
+          <a href="{{ block.settings.ticket_url | default: '#' }}" class="btn solid" style="padding:.6em 1.2em;">GET TICKETS</a>
+        </div>
+      {% else %}
+        <p class="status pending">NO SCHEDULED TRANSMISSIONS</p>
+      {% endfor %}
+    {% endif %}
   </div>
 </section>
 
