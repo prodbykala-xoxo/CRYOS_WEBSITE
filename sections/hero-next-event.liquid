@@ -62,6 +62,23 @@
     </div>
 
     <h1 class="cry-hero__title" data-boot-line style="opacity:0;">{{ shop.name | default: 'KALA' }}</h1>
+
+    {% if auto_event or fallback_event %}
+      {% comment %}
+        Invisible same-structure spacer — the real panel is now
+        absolutely positioned elsewhere, but the title block still
+        needs to reserve this height to sit where it used to.
+      {% endcomment %}
+      <div class="mbox event-panel event-panel--spacer" aria-hidden="true">
+        <div class="mtitle">NEXT EVENT <span class="jp-gloss">次のイベント</span><span class="meta">X</span></div>
+        <div class="tour">X</div>
+        <div class="row"><span class="k">DATE</span><span class="v">X</span></div>
+        <div class="row"><span class="k">LOCATION</span><span class="v">X</span></div>
+        <div class="row"><span class="k">VENUE</span><span class="v">X</span></div>
+        <div class="row" style="border-bottom:none;padding-top:12px;"><span class="status ok">X</span></div>
+        <a href="#" class="btn solid" style="width:100%;margin-top:12px;" tabindex="-1">X</a>
+      </div>
+    {% endif %}
   </div>
 
   {% if auto_event %}

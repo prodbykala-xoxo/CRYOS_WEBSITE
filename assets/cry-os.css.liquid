@@ -402,8 +402,10 @@ button { font-family: inherit; }
   position: absolute; z-index: 2; top: 50%; right: 24px; transform: translateY(-50%);
   width: min(400px, 100%);
 }
+.event-panel--spacer { position: static; transform: none; visibility: hidden; pointer-events: none; }
 @media (max-width: 640px) {
   .event-panel { position: static; transform: none; width: 100%; margin: 24px 0 0; }
+  .event-panel--spacer { display: none; }
 }
 .event-panel .tour { font-family: var(--disp); font-size: 22px; color: var(--ink); text-shadow: 1px 1px 0 #000; margin-bottom: 10px; }
 
