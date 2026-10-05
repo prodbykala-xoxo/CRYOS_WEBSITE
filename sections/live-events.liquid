@@ -6,12 +6,10 @@
       <div class="event-row">
         <div class="event-row__id">{{ block.settings.event_id }}</div>
         <div class="event-row__date">{{ block.settings.date }}</div>
-        <div class="event-row__icon-slot">
+        <div class="event-row__place">
           {% if block.settings.promo_icon %}
             <img class="event-row__icon" src="{{ block.settings.promo_icon | image_url: width: 80 }}" alt="" width="28" height="28">
           {% endif %}
-        </div>
-        <div class="event-row__place">
           {{ block.settings.tour_name }} — {{ block.settings.city }} / {{ block.settings.country }}
           <span class="sub">{{ block.settings.venue }}{% if block.settings.support != blank %} · w/ {{ block.settings.support }}{% endif %}</span>
         </div>
