@@ -16,17 +16,24 @@
       {% for article in archive_blog.articles limit: 4 %}
         <a href="{{ article.url }}" class="shot" style="aspect-ratio:4/5;">
           {% if article.image %}{{ article.image | image_url: width: 600 | image_tag: loading: 'lazy' }}{% endif %}
-          <figcaption>{{ article.title | upcase }}</figcaption>
+          <figcaption>
+            <span class="scrap__title">{{ article.title | upcase }}</span>
+            {% if article.excerpt != blank %}<span class="scrap__note">{{ article.excerpt }}</span>{% endif %}
+          </figcaption>
         </a>
       {% endfor %}
     {% else %}
       {% comment %} Demo content until a "live-archive" blog exists — swap for real articles. {% endcomment %}
       {% assign demo_photos = 'tour-jp-01.jpg,tour-jp-02.jpg,tour-jp-03.jpg,tour-jp-04.jpg' | split: ',' %}
       {% assign demo_labels = 'SEKAI//DIVIDE — NAGOYA,SEKAI//DIVIDE — OSAKA,SEKAI//DIVIDE — TOKYO,LIGHT FADE TOUR' | split: ',' %}
+      {% assign demo_notes = 'crowd sang every word back. still buzzing.,first time back since the divide sessions.,sold out 20 minutes in. unreal.,new era starts here.' | split: ',' %}
       {% for photo in demo_photos %}
         <div class="shot" style="aspect-ratio:4/5;">
           <img src="{{ photo | asset_url }}" alt="" loading="lazy">
-          <figcaption>{{ demo_labels[forloop.index0] }}</figcaption>
+          <figcaption>
+            <span class="scrap__title">{{ demo_labels[forloop.index0] }}</span>
+            <span class="scrap__note">{{ demo_notes[forloop.index0] }}</span>
+          </figcaption>
         </div>
       {% endfor %}
     {% endif %}

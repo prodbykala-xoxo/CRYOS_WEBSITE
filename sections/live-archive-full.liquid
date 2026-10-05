@@ -12,7 +12,10 @@
         <a href="{{ article.url }}" class="mbox flat" style="display:block;text-decoration:none;">
           <div class="shot" style="aspect-ratio:4/5;margin-bottom:12px;">
             {% if article.image %}{{ article.image | image_url: width: 600 | image_tag: loading: 'lazy' }}{% endif %}
-            <figcaption>EVENT_{{ forloop.index | prepend: '000' | slice: -3, 3 }}</figcaption>
+            <figcaption>
+              <span class="scrap__title">EVENT_{{ forloop.index | prepend: '000' | slice: -3, 3 }}</span>
+              {% if article.excerpt != blank %}<span class="scrap__note">{{ article.excerpt }}</span>{% endif %}
+            </figcaption>
           </div>
           <div class="v" style="font-size:14px;">{{ article.title }}</div>
           <div class="k" style="margin-top:4px;">{{ article.published_at | date: '%m.%d.%Y' }}</div>
@@ -23,13 +26,16 @@
       {% endfor %}
     {% else %}
       {% comment %} Demo content until a "live-archive" blog exists — swap for real articles. {% endcomment %}
-      {% assign demo = 'tour-jp-01.jpg|SEKAI//DIVIDE — NAGOYA JAMMIN|02.11.2026,tour-jp-02.jpg|SEKAI//DIVIDE — OSAKA Yogibo META VALLEY|02.13.2026,tour-jp-03.jpg|SEKAI//DIVIDE — TOKYO Spotify O-West|02.22.2026,tour-jp-04.jpg|LIGHT FADE TOUR — TOKYO clubasia|08.19.2026' | split: ',' %}
+      {% assign demo = 'tour-jp-01.jpg|SEKAI//DIVIDE — NAGOYA JAMMIN|02.11.2026|crowd sang every word back. still buzzing.,tour-jp-02.jpg|SEKAI//DIVIDE — OSAKA Yogibo META VALLEY|02.13.2026|first time back since the divide sessions.,tour-jp-03.jpg|SEKAI//DIVIDE — TOKYO Spotify O-West|02.22.2026|sold out 20 minutes in. unreal.,tour-jp-04.jpg|LIGHT FADE TOUR — TOKYO clubasia|08.19.2026|new era starts here.' | split: ',' %}
       {% for entry in demo %}
         {% assign parts = entry | split: '|' %}
         <div class="mbox flat">
           <div class="shot" style="aspect-ratio:4/5;margin-bottom:12px;">
             <img src="{{ parts[0] | asset_url }}" alt="" loading="lazy">
-            <figcaption>EVENT_{{ forloop.index | prepend: '000' | slice: -3, 3 }}</figcaption>
+            <figcaption>
+              <span class="scrap__title">EVENT_{{ forloop.index | prepend: '000' | slice: -3, 3 }}</span>
+              <span class="scrap__note">{{ parts[3] }}</span>
+            </figcaption>
           </div>
           <div class="v" style="font-size:14px;">{{ parts[1] }}</div>
           <div class="k" style="margin-top:4px;">{{ parts[2] }}</div>
